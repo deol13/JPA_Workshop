@@ -21,9 +21,9 @@ performing an @EntityScan
 turning on SQL logging
  */
 public class AppUserRepositoryTest {
-    @Autowired // Dependency Inject field
+    @Autowired // Because this is  in test, we can Dependency Inject our repository interface directly to a field
     AppUserRepository appUserRepository;
-    @Autowired // Dependency Inject field
+    @Autowired
     DetailsRepository detailsRepository;
 
     @Test

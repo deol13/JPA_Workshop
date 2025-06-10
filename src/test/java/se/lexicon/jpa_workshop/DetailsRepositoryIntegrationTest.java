@@ -12,10 +12,16 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@DataJpaTest
+@DataJpaTest // Will set up and configure a test database we will use during the tests
+/*
+configuring H2, an in-memory database
+setting Hibernate, Spring Data, and the DataSource
+performing an @EntityScan
+turning on SQL logging
+ */
 public class DetailsRepositoryIntegrationTest {
 
-    @Autowired // Dependency Inject field
+    @Autowired // Because this is  in test, we can Dependency Inject our repository interface directly to a field
     DetailsRepository detailsRepository;
 
     @Test
