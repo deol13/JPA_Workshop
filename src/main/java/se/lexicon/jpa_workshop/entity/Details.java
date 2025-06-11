@@ -20,14 +20,15 @@ import java.time.LocalDate;
 // Marks this class as an entity so JPA creates a table in the database of it.
 // Also makes a component for Spring Cores IoC and DI
 // A field with @Id annotation and a default is needed.
+@Entity
 public class Details {
 
-    @Id // Marks this field as the primary key in this Entity
+    // Marks this field as the primary key in this Entity
     // Makes the database generate a value for this variable,
     // GenerationType is different ways to give this field a value, IDENTITY is auto increment
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // Follow naming conventions
-    private int id;
+    private int id; // Follow naming conventions
 
     // @Setter is a Lombok annotation for auto generate a setter method.
     // We could put @Setter outside the class with all the others

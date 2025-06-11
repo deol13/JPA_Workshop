@@ -20,12 +20,12 @@ import java.time.LocalDate;
 @Entity
 public class AppUser {
 
-    @Id // Marks this field as the primary key in this Entity
+    // Marks this field as the primary key in this Entity
     // Makes the database generate a value for this variable,
     // GenerationType is different ways to give this field a value, IDENTITY is auto increment
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // Follow naming conventions
-    private int id;
+    private int id; // Follow naming conventions
 
     // @Setter is a Lombok annotation for auto generate a setter method.
     // We could put @Setter outside the class with all the others
@@ -39,11 +39,14 @@ public class AppUser {
     // OneToMany and ManyToOne are other relationship annotations.
     // Without adding anything in the other class, this becomes a uni-directional relationship, only works on @OneToOne.
     // We could add a @OneToOne(mappedBy = userDetails) in Details to make it bidirectional relationship.
-    @OneToOne()
+
     // @JoinColumn annotation marks a field as a joined column for a relationship with the class of the object.
     // With @OneToOne annotation it indicates that the given column in the owner entity refers to a primary key in the reference entity.
     // In this case it will create a foreign key linking AppUser with the primary key from Details.
     // "name" in @JoinColumn is the name of the foreign key column this annotation creates by connecting the two classes.
+
+
+    @OneToOne()
     @JoinColumn(name = "details_id")
     @Setter private Details userDetails;
 
