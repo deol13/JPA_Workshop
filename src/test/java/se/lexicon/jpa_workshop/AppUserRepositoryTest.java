@@ -83,7 +83,7 @@ public class AppUserRepositoryTest {
     }
 
     @Test
-    void whenFindByUsername_thenCorrect() {
+    void whenFindByUsername_match_thenCorrect() {
         // given
         AppUser appUser = new AppUser("un","123456", LocalDate.now());
         AppUser appUser2 = new AppUser("un2","1234567", LocalDate.now());
@@ -100,7 +100,22 @@ public class AppUserRepositoryTest {
     }
 
     @Test
-    void whenFindByRegDateBetween_thenCorrect() {
+    void whenFindByUsername_noMatch_thenCorrect() {
+        // given
+        AppUser appUser = new AppUser("un","123456", LocalDate.now());
+        AppUser appUser2 = new AppUser("un2","1234567", LocalDate.now());
+        AppUser createdUser = appUserRepository.save(appUser);
+        appUserRepository.save(appUser2);
+
+        // when
+        List<AppUser> foundAppUser = appUserRepository.findByUsername("Onto");
+
+        // then
+        Assertions.assertTrue(foundAppUser.isEmpty());
+    }
+
+    @Test
+    void whenFindByRegDateBetween_match_thenCorrect() {
         // given
         AppUser appUser = new AppUser("un","123456", LocalDate.of(2020,1,1));
         AppUser appUser2 = new AppUser("un2","1234567", LocalDate.now());
@@ -117,7 +132,22 @@ public class AppUserRepositoryTest {
     }
 
     @Test
-    void whenFindByDetailsId_thenCorrect() {
+    void whenFindByRegDateBetween_noMatch_thenCorrect() {
+        // given
+        AppUser appUser = new AppUser("un","123456", LocalDate.of(2020,1,1));
+        AppUser appUser2 = new AppUser("un2","1234567", LocalDate.now());
+        AppUser createdUser = appUserRepository.save(appUser);
+        AppUser createdUser2 = appUserRepository.save(appUser2);
+
+        // when
+        List<AppUser> foundAppUser = appUserRepository.findByRegDateBetween(LocalDate.of(2019,1,1), LocalDate.of(2019,6,1));
+
+        // then
+        Assertions.assertTrue(foundAppUser.isEmpty());
+    }
+
+    @Test
+    void whenFindByDetailsId_match_thenCorrect() {
         // given
         Details details = new Details("testName","testEmail", LocalDate.now());
         Details createdDetails = detailsRepository.save(details);
@@ -131,5 +161,21 @@ public class AppUserRepositoryTest {
         // then
         Assertions.assertNotNull(foundAppUser);
         Assertions.assertEquals(createdUser.getUserDetails().getId(), foundAppUser.getUserDetails().getId());
+    }
+
+    @Test
+    void whenFindByDetailsId_noMatch_thenCorrect() {
+        // given
+        Details details = new Details("testName","testEmail", LocalDate.now());
+        Details createdDetails = detailsRepository.save(details);
+
+        AppUser appUser = new AppUser("un","123456", LocalDate.now(), createdDetails);
+        AppUser createdUser = appUserRepository.save(appUser);
+
+        // when
+        AppUser foundAppUser = appUserRepository.findByDetailsId(1000);
+
+        // then
+        Assertions.assertNull(foundAppUser);
     }
 }

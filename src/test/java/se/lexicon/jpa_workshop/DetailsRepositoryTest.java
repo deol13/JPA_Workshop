@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import se.lexicon.jpa_workshop.entity.AppUser;
 import se.lexicon.jpa_workshop.entity.Details;
 import se.lexicon.jpa_workshop.repository.DetailsRepository;
 
@@ -19,7 +18,7 @@ setting Hibernate, Spring Data, and the DataSource
 performing an @EntityScan
 turning on SQL logging
  */
-public class DetailsRepositoryIntegrationTest {
+public class DetailsRepositoryTest {
 
     @Autowired // Because this is  in test, we can Dependency Inject our repository interface directly to a field
     DetailsRepository detailsRepository;
@@ -82,7 +81,7 @@ public class DetailsRepositoryIntegrationTest {
 
 
     @Test
-    void whenFindByEmail_thenCorrect(){
+    void whenFindByEmail_match_thenCorrect(){
         // given
         Details details = new Details("testName", "testEmail", LocalDate.now());
         Details createdDetails = detailsRepository.save(details);
@@ -97,7 +96,20 @@ public class DetailsRepositoryIntegrationTest {
     }
 
     @Test
-    void whenFindByEmailIgnoreCase_thenCorrect(){
+    void whenFindByEmail_noMatch_thenCorrect(){
+        // given
+        Details details = new Details("testName", "testEmail", LocalDate.now());
+        Details createdDetails = detailsRepository.save(details);
+
+        // when
+        List<Details> foundDetails = detailsRepository.findByEmail("matt@email.com");
+
+        // then
+        Assertions.assertTrue(foundDetails.isEmpty());
+    }
+
+    @Test
+    void whenFindByEmailIgnoreCase_match_thenCorrect(){
         // given
         Details details = new Details("testName", "testEmail", LocalDate.now());
         Details createdDetails = detailsRepository.save(details);
@@ -112,7 +124,20 @@ public class DetailsRepositoryIntegrationTest {
     }
 
     @Test
-    void whenFindByNameContaining_thenCorrect(){
+    void whenFindByEmailIgnoreCase_noMatch_thenCorrect(){
+        // given
+        Details details = new Details("testName", "testEmail", LocalDate.now());
+        Details createdDetails = detailsRepository.save(details);
+
+        // when
+        List<Details> foundDetails = detailsRepository.findByEmailIgnoreCase("matt@email.com");
+
+        // then
+        Assertions.assertTrue(foundDetails.isEmpty());
+    }
+
+    @Test
+    void whenFindByNameContaining_match_thenCorrect(){
         // given
         Details details = new Details("testName", "testEmail", LocalDate.now());
         Details createdDetails = detailsRepository.save(details);
@@ -127,7 +152,20 @@ public class DetailsRepositoryIntegrationTest {
     }
 
     @Test
-    void whenFindByNameIgnoreCase_thenCorrect(){
+    void whenFindByNameContaining_noMatch_thenCorrect(){
+        // given
+        Details details = new Details("testName", "testEmail", LocalDate.now());
+        Details createdDetails = detailsRepository.save(details);
+
+        // when
+        List<Details> foundDetails = detailsRepository.findByNameContaining("Abra");
+
+        // then
+        Assertions.assertTrue(foundDetails.isEmpty());
+    }
+
+    @Test
+    void whenFindByNameIgnoreCase_matches_thenCorrect(){
         // given
         Details details = new Details("testName", "testEmail", LocalDate.now());
         Details createdDetails = detailsRepository.save(details);
@@ -139,5 +177,18 @@ public class DetailsRepositoryIntegrationTest {
         Assertions.assertFalse(foundDetails.isEmpty());
         Assertions.assertEquals(1, foundDetails.size());
         Assertions.assertEquals(foundDetails.get(0), createdDetails);
+    }
+
+    @Test
+    void whenFindByNameIgnoreCase_noMatches_thenCorrect(){
+        // given
+        Details details = new Details("testName", "testEmail", LocalDate.now());
+        Details createdDetails = detailsRepository.save(details);
+
+        // when
+        List<Details> foundDetails = detailsRepository.findByNameIgnoreCase("Abra");
+
+        // then
+        Assertions.assertTrue(foundDetails.isEmpty());
     }
 }
