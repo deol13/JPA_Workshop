@@ -9,6 +9,7 @@ import org.hibernate.annotations.UuidGenerator;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 
 @Entity
 public class Book {

@@ -1,4 +1,4 @@
-package se.lexicon.jpa_workshop;
+package se.lexicon.jpa_workshop.repository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import se.lexicon.jpa_workshop.entity.AppUser;
 import se.lexicon.jpa_workshop.entity.Details;
-import se.lexicon.jpa_workshop.repository.AppUserRepository;
-import se.lexicon.jpa_workshop.repository.DetailsRepository;
 
 import java.time.LocalDate;
 import java.util.List;
