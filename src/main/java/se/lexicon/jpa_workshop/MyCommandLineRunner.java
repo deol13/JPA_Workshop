@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import se.lexicon.jpa_workshop.entity.AppUser;
 import se.lexicon.jpa_workshop.entity.Details;
 import se.lexicon.jpa_workshop.repository.AppUserRepository;
+import se.lexicon.jpa_workshop.repository.BookLoanRepository;
 import se.lexicon.jpa_workshop.repository.BookRepository;
 import se.lexicon.jpa_workshop.repository.DetailsRepository;
 
@@ -16,12 +17,14 @@ public class MyCommandLineRunner implements CommandLineRunner {
     private AppUserRepository appUserRepository;
     private DetailsRepository detailsRepository;
     private BookRepository bookRepository;
+    private BookLoanRepository bookLoanRepository;
 
     @Autowired
-    public MyCommandLineRunner(AppUserRepository appUserRepository, DetailsRepository detailsRepository, BookRepository bookRepository) {
+    public MyCommandLineRunner(AppUserRepository appUserRepository, DetailsRepository detailsRepository, BookRepository bookRepository, BookLoanRepository bookLoanRepository) {
         this.appUserRepository = appUserRepository;
         this.detailsRepository = detailsRepository;
         this.bookRepository = bookRepository;
+        this.bookLoanRepository = bookLoanRepository;
     }
 
     @Override
