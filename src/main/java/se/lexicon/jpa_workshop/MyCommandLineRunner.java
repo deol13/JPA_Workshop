@@ -14,11 +14,15 @@ import java.time.LocalDate;
 public class MyCommandLineRunner implements CommandLineRunner {
     private AppUserRepository appUserRepository;
     private DetailsRepository detailsRepository;
+    //private BookRepository bookRepository;
+    //private BookLoanRepository bookLoanRepository;
 
     @Autowired
-    public MyCommandLineRunner(AppUserRepository appUserRepository, DetailsRepository detailsRepository) {
+    public MyCommandLineRunner(AppUserRepository appUserRepository, DetailsRepository detailsRepository) {//, BookRepository bookRepository, BookLoanRepository bookLoanRepository) {
         this.appUserRepository = appUserRepository;
         this.detailsRepository = detailsRepository;
+        //this.bookRepository = bookRepository;
+        //this.bookLoanRepository = bookLoanRepository;
     }
 
     @Override
