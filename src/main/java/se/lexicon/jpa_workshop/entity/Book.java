@@ -4,6 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -23,8 +28,20 @@ public class Book {
     private String title;
     private int maxLoadDays;
 
+    @ManyToMany(mappedBy = "writtenBooks")
+    private Set<Author> authors = new HashSet<>();
+
     public Book(String title, int maxLoadDays) {
         this.title = title;
         this.maxLoadDays = maxLoadDays;
+    }
+
+    public void addAuthor(Author author) {
+        this.authors.add(author);
+        author.getWrittenBooks().add(this);
+    }
+    public void removeAuthor(Author author) {
+        this.authors.remove(author);
+        author.getWrittenBooks().remove(this);
     }
 }
