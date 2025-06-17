@@ -34,7 +34,7 @@ public class AppUser {
     @Column(length = 50)
     @Setter private String username;
     @Column(length = 50)
-    @Setter private String password;
+    @Setter private String password; // don't forgot to hash it
     @Setter private LocalDate regDate;
 
     // @OneToOne annotation maps a relationship with the class of the object its above for the database.
