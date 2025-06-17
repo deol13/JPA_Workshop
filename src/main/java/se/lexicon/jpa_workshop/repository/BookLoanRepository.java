@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import se.lexicon.jpa_workshop.entity.AppUser;
+import se.lexicon.jpa_workshop.entity.Book;
 import se.lexicon.jpa_workshop.entity.BookLoan;
 
 import java.time.LocalDate;
@@ -18,9 +20,11 @@ public interface BookLoanRepository extends CrudRepository<BookLoan, Long> {
     List<BookLoan> findAllByDueDateBeforeAndReturnedFalse(LocalDate dueDate);
     List<BookLoan> findAllByLoanDateBetween(LocalDate startDate, LocalDate endDate);
 
-    @Modifying
-    @Query("update BookLoan bl set bl.returned = true where bl.id = :id")
-    int updateBookLoanReturnedTrueById(@Param("id") long id);
+    //int updateBookLoan(BookLoan bookLoan);
+
+    @Modifying(clearAutomatically = true)
+    @Query("update BookLoan b set b.returned = true where b.id = :id")
+    int updateBookLoanReturnedTrueById(@Param("id") int id);
 
 
 }

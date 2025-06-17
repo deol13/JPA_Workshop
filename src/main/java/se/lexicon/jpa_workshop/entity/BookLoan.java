@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 public class BookLoan {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // todo: Checkout the other generation types
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false)
     private LocalDate loanDate;

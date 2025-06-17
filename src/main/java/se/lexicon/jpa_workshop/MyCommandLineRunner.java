@@ -49,5 +49,16 @@ public class MyCommandLineRunner implements CommandLineRunner {
         BookLoan createdBookLoan = bookLoanRepository.save(bookLoan);
         System.out.printf("\nBook loan created: %s\n", createdBookLoan);
 
+//        createdBookLoan.setReturned(true);
+//        int id = bookLoanRepository.updateBookLoan(createdBookLoan);
+//        BookLoan updatedBookLoan = bookLoanRepository.findById((long) id).orElse(null);
+//        System.out.printf("\nBook loan updated: %s\n", updatedBookLoan);
+
+//        int id = bookLoanRepository.updateBookLoanReturnedTrueById(createdBookLoan.getId());
+////                createdBookLoan.getLoanDate(), createdBookLoan.getDueDate(),
+////                createdBookLoan.getBorrower(), createdBookLoan.getBook());
+//        BookLoan updatedBookLoan = bookLoanRepository.findById((long) id).orElse(null);
+//        System.out.printf("\nBook loan updated: %s\n", updatedBookLoan);
+
     }
 }
