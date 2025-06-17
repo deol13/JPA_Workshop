@@ -25,11 +25,20 @@ public class Author {
     private String lastName;
     private LocalDate birthDate;
 
-    @ManyToMany
-    //@JoinTable( name = "author_book"
-    //        ,joinColumns = @JoinColumn(name = "author_id")
-    //        ,inverseJoinColumns = @JoinColumn(name = "book_id"))
-    Set<Book> writtenBooks = new HashSet<>();
+    /*
+    Note that using @JoinTable or even @JoinColumn isn’t required.
+    JPA will generate the table and column names for us.
+    However, the strategy JPA uses won’t always match the naming conventions we use.
+    So, we need the possibility to configure table and column names.
+
+    Keep in mind that since a many-to-many relationship doesn’t have an owner side in the database,
+    we could configure the join table in the Course class and reference it from the Student class.
+     */
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable( name = "authors_books"
+            ,joinColumns = @JoinColumn(name = "author_id")
+            ,inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private Set<Book> writtenBooks = new HashSet<>();
 
     public Author(String firstName, String lastName, LocalDate birthDate) {
         this.firstName = firstName;
@@ -39,10 +48,10 @@ public class Author {
 
     public void addWrittenBook(Book book) {
         writtenBooks.add(book);
-        book.getAuthors().add(this);
+       // book.getAuthors().add(this);
     }
     public void removeWrittenBook(Book book) {
         writtenBooks.remove(book);
-        book.getAuthors().remove(this);
+      //  book.getAuthors().remove(this);
     }
 }
