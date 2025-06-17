@@ -1,9 +1,6 @@
 package se.lexicon.jpa_workshop.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -34,7 +31,9 @@ public class Details {
     // We could put @Setter outside the class with all the others
     // but if we just want specific setters and getters to be made, we need to put it before those fields.
     // Here we don't want a setter for id.
+    @Column(length = 50)
     @Setter private String name;
+    @Column(length = 50)
     @Setter private String email;
     @Setter private LocalDate birthDate;
 

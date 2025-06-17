@@ -31,7 +31,9 @@ public class AppUser {
     // We could put @Setter outside the class with all the others
     // but if we just want specific setters and getters to be made, we need to put it before those fields.
     // Here we don't want a setter for id.
+    @Column(length = 50)
     @Setter private String username;
+    @Column(length = 50)
     @Setter private String password;
     @Setter private LocalDate regDate;
 
@@ -46,7 +48,7 @@ public class AppUser {
     // "name" in @JoinColumn is the name of the foreign key column this annotation creates by connecting the two classes.
 
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details_id")
     @Setter private Details userDetails;
 

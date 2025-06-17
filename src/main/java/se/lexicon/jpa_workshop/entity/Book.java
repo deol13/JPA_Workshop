@@ -24,7 +24,7 @@ public class Book {
     @Column(unique = true, nullable = false)
     @UuidGenerator
     private String isbn;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String title;
     private int maxLoadDays;
 
