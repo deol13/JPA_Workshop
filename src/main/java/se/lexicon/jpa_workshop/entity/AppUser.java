@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 // Lombok annotations, you can exclude fields. (exclude =)
 // Lombok removes a lot of the boiler code (repeated code), such as making constructors and getters / setters for classes
@@ -52,6 +54,9 @@ public class AppUser {
     @JoinColumn(name = "details_id")
     @Setter private Details userDetails;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "borrower")
+    List<BookLoan> bookLoanList = new ArrayList<>();
+
     public AppUser(String username, String password, LocalDate regDate, Details userDetails) {
         this.username = username;
         this.password = password;
@@ -62,5 +67,14 @@ public class AppUser {
         this.username = username;
         this.password = password;
         this.regDate = regDate;
+    }
+
+    public void addBookLoan(BookLoan bookLoan) {
+        bookLoanList.add(bookLoan);
+        bookLoan.setBorrower(this);
+    }
+    public void removeBookLoan(BookLoan bookLoan) {
+        boolean success = bookLoanList.remove(bookLoan);
+        bookLoan.setBorrower(null);
     }
 }

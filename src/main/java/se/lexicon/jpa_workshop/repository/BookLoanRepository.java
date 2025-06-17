@@ -23,6 +23,7 @@ public interface BookLoanRepository extends CrudRepository<BookLoan, Long> {
 
     //int updateBookLoan(BookLoan bookLoan);
 
+    //todo: fix, if all unit test runs at the same time update test gets back null
     @Modifying(clearAutomatically = true) // EntityManager doesn't flush change automatically by default. You won't get the updated data otherwise.
     @Transactional // needed for updates to work, most likely to ensure if associations exists, this update will not work if associated changed doesn't work.
     @Query("update BookLoan b set b.returned = true where b.id = :id")

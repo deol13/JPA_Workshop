@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 @EqualsAndHashCode
 
 @Entity
@@ -27,7 +27,8 @@ public class BookLoan {
 
     // Uni directional many-to-to relationship, the associated classes / tables have no information about it.
     // Many of this class / table can have a relationship with the same AppUser and Book.
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "borrower_id")
     private AppUser borrower;
 
     @ManyToOne
@@ -44,9 +45,38 @@ public class BookLoan {
         this.dueDate = dueDate;
     }
 
-    public BookLoan(LocalDate dueDate, AppUser borrower, Book book) {
+    public BookLoan(LocalDate dueDate, Book book){
         this(dueDate);
-        this.borrower = borrower;
+        this.dueDate = dueDate;
         this.book = book;
+    }
+
+    public BookLoan(LocalDate dueDate, AppUser borrower, Book book) {
+        this(dueDate, book);
+        this.borrower = borrower;
+    }
+
+
+    @Override
+    public String toString() {
+        if(borrower == null){
+            return "BookLoan{" +
+                    "id=" + id +
+                    ", loanDate=" + loanDate +
+                    ", dueDate=" + dueDate +
+                    ", returned=" + returned +
+                    ", borrower={" + "} " +
+                    ", book=" + book +
+                    '}';
+        }
+
+        return "BookLoan{" +
+                "id=" + id +
+                ", loanDate=" + loanDate +
+                ", dueDate=" + dueDate +
+                ", returned=" + returned +
+                ", borrower={" + " borrower id: " + borrower.getId() + " borrower username: " +borrower.getUsername() + "} " +
+                ", book=" + book +
+                '}';
     }
 }

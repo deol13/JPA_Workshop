@@ -18,6 +18,7 @@ public interface AuthorRepository extends CrudRepository<Author, Long> {
     @Query("select a from Author a where a.firstName LIKE %:keyword% OR a.lastName LIKE %:keyword%")
     Set<Author> findByFirstNameOrLastNameContainingKeyword(String keyword);
 
+    //todo: fix, if all unit test runs at the same time update test gets back null
     @Modifying(clearAutomatically = true) // EntityManager doesn't flush change automatically by default. You won't get the updated data otherwise.
     @Transactional // needed for updates to work, most likely to ensure if associations exists, this update will not work if associated changed doesn't work.
     @Query("update Author a set a.firstName = :firstName, a.lastName = :lastName where a.id = :id")
