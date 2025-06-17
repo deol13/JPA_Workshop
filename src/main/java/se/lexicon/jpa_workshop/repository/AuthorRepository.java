@@ -11,9 +11,11 @@ import java.util.Set;
 public interface AuthorRepository extends CrudRepository<Author, Long> {
     Set<Author> findByFirstName(String firstName);
     Set<Author> findByLastName(String lastName);
-    Set<Author> findByFirstNameOrLastNameContainsKeyword(String keyword);
     Set<Author> findByWrittenBooksId(int writtenBooksId);
     void deleteById(int id);
+
+    @Query("select a from Author a where a.firstName LIKE %:keyword% OR a.lastName LIKE %:keyword%")
+    Set<Author> findByFirstNameOrLastNameContainingKeyword(String keyword);
 
     @Modifying
     @Query("update Author a set a.firstName = :firstName, a.lastName = :lastName where a.id = :id")
