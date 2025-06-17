@@ -136,16 +136,16 @@ public class BookLoanRepositoryTest {
 
     @Test
     public void testUpdateBookLoanReturnedTrueById(){
-//        // given
-//        BookLoan bookLoan = new BookLoan(LocalDate.of(2025,7,10));
-//        BookLoan savedBookLoan = bookLoanRepository.save(bookLoan);
-//
-//        // when
-//        int id = bookLoanRepository.updateBookLoanReturnedTrueById(savedBookLoan.getId());
-//
-//        // when
-//        BookLoan updatedBookLoan = bookLoanRepository.findById((long) id).orElse(null);
-//        Assertions.assertNotNull(updatedBookLoan);
-//        Assertions.assertTrue(updatedBookLoan.isReturned());
+        // given
+        BookLoan bookLoan = new BookLoan(LocalDate.of(2025,7,10));
+        BookLoan savedBookLoan = bookLoanRepository.save(bookLoan);
+
+        // when
+        int id = bookLoanRepository.updateBookLoanReturnedTrueById(savedBookLoan.getId());
+
+        // when
+        BookLoan updatedBookLoan = bookLoanRepository.findById((long) id).orElse(null);
+        Assertions.assertNotNull(updatedBookLoan);
+        Assertions.assertTrue(updatedBookLoan.isReturned());
     }
 }

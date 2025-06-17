@@ -1,5 +1,6 @@
 package se.lexicon.jpa_workshop.repository;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -23,8 +24,7 @@ public interface BookLoanRepository extends CrudRepository<BookLoan, Long> {
     //int updateBookLoan(BookLoan bookLoan);
 
     @Modifying(clearAutomatically = true)
+    @Transactional
     @Query("update BookLoan b set b.returned = true where b.id = :id")
     int updateBookLoanReturnedTrueById(@Param("id") int id);
-
-
 }
