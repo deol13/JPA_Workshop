@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-//@ToString
+@ToString
 @EqualsAndHashCode
 
 @Entity
@@ -29,6 +29,8 @@ public class BookLoan {
     // Many of this class / table can have a relationship with the same AppUser and Book.
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "borrower_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private AppUser borrower;
 
     @ManyToOne
@@ -54,29 +56,5 @@ public class BookLoan {
     public BookLoan(LocalDate dueDate, AppUser borrower, Book book) {
         this(dueDate, book);
         this.borrower = borrower;
-    }
-
-    // todo: add @ToString then @ToString.Exclude above borrower. Also in @EqualsAndHashCode
-    @Override
-    public String toString() {
-        if(borrower == null){
-            return "BookLoan{" +
-                    "id=" + id +
-                    ", loanDate=" + loanDate +
-                    ", dueDate=" + dueDate +
-                    ", returned=" + returned +
-                    ", borrower={" + "} " +
-                    ", book=" + book +
-                    '}';
-        }
-
-        return "BookLoan{" +
-                "id=" + id +
-                ", loanDate=" + loanDate +
-                ", dueDate=" + dueDate +
-                ", returned=" + returned +
-                ", borrower={" + " borrower id: " + borrower.getId() + " borrower username: " +borrower.getUsername() + "} " +
-                ", book=" + book +
-                '}';
     }
 }

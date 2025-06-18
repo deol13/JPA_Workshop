@@ -31,8 +31,8 @@ public class MyCommandLineRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("###### Application started successfully ######");
         //appUserAndDetails();
-        //bookAndAuthor();
-        bookLoan();
+        bookAndAuthor();
+        //bookLoan();
     }
 
 
@@ -40,30 +40,56 @@ public class MyCommandLineRunner implements CommandLineRunner {
         System.out.println("###### App user and details ######");
         Details details = new Details("John Doe", "JohnDoe@email.com", LocalDate.of(1990, 1, 1));
 
-        AppUser user = new AppUser("admin", "123", LocalDate.of(1995, 1, 1), details);
+        AppUser user = new AppUser("admin", "123", details);
         AppUser createdAppUser = appUserRepository.save(user);
-        System.out.printf("\nAppUser created: %s\n", createdAppUser);
+
+        System.out.printf("AppUser created: %s\n", createdAppUser);
+        System.out.printf("Details created: %s\n", createdAppUser.getUserDetails());
     }
 
     public void bookAndAuthor() {
         System.out.println("\n###### Book and Author ######");
 
         Book book = new Book("Lord of the Ring", 35);
-        Book createdBook2 = bookRepository.save(book);
-        System.out.printf("\nBook created: %s\n", createdBook2);
+        //Book createdBook = bookRepository.save(book);
+        //System.out.printf("\nBook created: %s\n", createdBook);
 
-        Author author = new Author("Dennis", "Olsen", LocalDate.of(1995, 1, 1));
+        Author author = new Author("JRR", "Tolk", LocalDate.of(1892, 1, 3));
         author.addWrittenBook(book);
         Author createdAuthor = authorRepository.save(author);
         System.out.printf("\nAuthor created: %s\n", createdAuthor);
 
-        int id2 = authorRepository.updateAuthorNameById("Johan", "Olsen", createdAuthor.getId());
-        Author updatedAuthor = authorRepository.findById((long) id2).orElse(null);
-        System.out.printf("\nAuthor updated: %s\n", updatedAuthor);
+        Book createdBook = createdAuthor.getWrittenBooks().stream().findFirst().get();
+        System.out.printf("\nBook created: %s\n", createdBook);
 
-        createdAuthor.removeWrittenBook(book);
-        Author updatedAuthor2 = authorRepository.save(updatedAuthor);
-        System.out.printf("\nBook removed from Author: %s\n", updatedAuthor2);
+        int id2 = authorRepository.updateAuthorNameById("J.R.R", "Tolkien", createdAuthor.getId());
+        Author updatedAuthor = authorRepository.findById((long) id2).orElse(null);
+        if(updatedAuthor != null) {
+            System.out.printf("\nAuthor updated: %s\n", updatedAuthor);
+
+            updatedAuthor.removeWrittenBook(createdBook);
+            updatedAuthor = authorRepository.save(updatedAuthor);
+
+
+//            Book updatedBook = bookRepository.findById((long) createdBook.getId()).orElse(null);
+//            if(updatedBook.getAuthors() != null)
+//            {
+//                System.out.printf("\nAuthor in Book checked: %s\n", updatedBook.getAuthors());
+//
+//                System.out.println("Book removed from Author" + updatedAuthor.getWrittenBooks());
+//                System.out.println("Author removed from Book" + book.getAuthors());
+//
+//                Author updatedAuthor2 = authorRepository.save(updatedAuthor);
+//                Book updatedBook2 = bookRepository.save(updatedBook);
+//
+//                System.out.println("Books in Author from DB after removal " + updatedAuthor2.getWrittenBooks());
+//                System.out.println("Authors in Book from DB after removal" + updatedBook2.getAuthors());
+//
+//
+//            }
+//            else System.out.println("Author does not exist");
+        }
+        else System.out.println("Author does not exist");
     }
 
     public void bookLoan() {
@@ -71,17 +97,15 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
         Details details = new Details("Johnny Doe", "JohnnyDoe@email.com", LocalDate.of(1990, 1, 1));
 
-        AppUser user = new AppUser("admin2", "123", LocalDate.of(1995, 1, 1), details);
+        AppUser user = new AppUser("admin2", "123", details);
         AppUser createdAppUser = appUserRepository.save(user);
         System.out.printf("\nAppUser created: %s\n", createdAppUser);
-
 
         Book book = new Book("The Hobbit", 30);
         Book createdBook = bookRepository.save(book);
         System.out.printf("\nBook created: %s\n", createdBook);
 
         BookLoan bookLoan = new BookLoan(LocalDate.of(2025, 7, 1), createdBook);
-        //BookLoan bookLoan2 = new BookLoan(LocalDate.of(2025, 7, 1), createdBook, createdAppUser);
         BookLoan createdBookLoan = bookLoanRepository.save(bookLoan);
 
         createdAppUser.addBookLoan(bookLoan);
@@ -92,16 +116,12 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
         int id = bookLoanRepository.updateBookLoanReturnedTrueById(createdBookLoan.getId());
         BookLoan updatedBookLoan2 = bookLoanRepository.findById((long) id).orElse(null);
-        AppUser updatedAppUser2 = appUserRepository.findById(updatedAppUser.getId()).orElse(null); // todo: gives LazyInitializationException
         System.out.printf("\nBook loan updated to returned: %s\n", updatedBookLoan2);
 
-        // todo: test if remove book loan updates book loan as well or if I have to manually save it
-        updatedAppUser2.removeBookLoan(updatedBookLoan2);
-        AppUser updatedAppUser3 = appUserRepository.save(updatedAppUser);
+        updatedAppUser.removeBookLoan(updatedBookLoan2);
+        AppUser updatedAppUser2 = appUserRepository.save(updatedAppUser);
         System.out.printf("\nAppUser removed book loan: %s\n", updatedAppUser2);
-
-        //BookLoan createdBookLoan2 = bookLoanRepository.save(bookLoan);
-        //System.out.printf("\nBook loan: %s\n", updatedBookLoan2);
+        System.out.println("\nBurrower in Book loan: " + updatedBookLoan2.getBorrower() );
     }
 
 }

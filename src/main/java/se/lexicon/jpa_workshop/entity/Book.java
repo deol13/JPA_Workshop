@@ -28,22 +28,22 @@ public class Book {
     private String title;
     private int maxLoadDays;
 
-    // if you re add this, remember to exclude authors from @EqualsAndHashCode and @ToString
-    // then to the same in Author to exclude Book
-//    @ManyToMany(mappedBy = "writtenBooks", fetch = FetchType.EAGER)
-//    private Set<Author> authors = new HashSet<>();
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "writtenBooks")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Author> authors = new HashSet<>();
 
     public Book(String title, int maxLoadDays) {
         this.title = title;
         this.maxLoadDays = maxLoadDays;
     }
 
-//    public void addAuthor(Author author) {
-//        this.authors.add(author);
-//        author.getWrittenBooks().add(this);
-//    }
-//    public void removeAuthor(Author author) {
-//        this.authors.remove(author);
-//        author.getWrittenBooks().remove(this);
-//    }
+    public void addAuthor(Author author) {
+        this.authors.add(author);
+        author.getWrittenBooks().add(this);
+    }
+    public void removeAuthor(Author author) {
+        this.authors.remove(author);
+        author.getWrittenBooks().remove(this);
+    }
 }

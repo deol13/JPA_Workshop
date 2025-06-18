@@ -60,18 +60,23 @@ public class AppUser {
     @Setter private Details userDetails;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "borrower")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     List<BookLoan> bookLoanList = new ArrayList<>();
 
-    public AppUser(String username, String password, LocalDate regDate, Details userDetails) {
+    @PrePersist
+    public void prePersist() {
+        regDate = LocalDate.now();
+    }
+
+    public AppUser(String username, String password, Details userDetails) {
         this.username = username;
         this.password = password;
-        this.regDate = regDate;
         this.userDetails = userDetails;
     }
-    public AppUser(String username, String password, LocalDate regDate ) {
+    public AppUser(String username, String password ) {
         this.username = username;
         this.password = password;
-        this.regDate = regDate;
     }
 
     public void addBookLoan(BookLoan bookLoan) {
