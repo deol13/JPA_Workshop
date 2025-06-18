@@ -37,7 +37,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
         //Details createdDetails = detailsRepository.save(details);
         //System.out.printf("Details created: %s\n", createdDetails);
 
-        AppUser user = new AppUser("admin", "123", LocalDate.of(1995, 1, 1), details);
+        AppUser user = new AppUser("admin", "123", details);
         AppUser createdAppUser = appUserRepository.save(user);
         System.out.printf("AppUser created: %s\n", createdAppUser);
 

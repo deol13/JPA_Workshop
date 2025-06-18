@@ -15,6 +15,7 @@ import org.hibernate.annotations.UuidGenerator;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private int id;
     @Column(unique = true, nullable = false)
     @UuidGenerator
