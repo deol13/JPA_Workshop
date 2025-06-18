@@ -32,12 +32,13 @@ public class MyCommandLineRunner implements CommandLineRunner {
         System.out.println("###### Application started successfully ######");
 
         Details details = new Details("John Doe", "JohnDoe@email.com", LocalDate.of(1990, 1, 1));
-        //Details createdDetails = detailsRepository.save(details);
-        //System.out.printf("Details created: %s\n", createdDetails);
+//        Details createdDetails = detailsRepository.save(details);
+//        System.out.printf("Details created: %s\n", createdDetails);
 
         AppUser user = new AppUser("admin", "123", details);
         AppUser createdAppUser = appUserRepository.save(user);
-        System.out.printf("AppUser created: %s\n", createdAppUser);
+        AppUser test = appUserRepository.findById(createdAppUser.getId()).orElse(null);
+        System.out.printf("AppUser created: %s\n", test);
 
         Book book = new Book("The Hobbit", 30);
         Book createdBook = bookRepository.save(book);

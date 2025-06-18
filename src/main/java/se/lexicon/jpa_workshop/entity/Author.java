@@ -38,6 +38,8 @@ public class Author {
     @JoinTable( name = "authors_books"
             ,joinColumns = @JoinColumn(name = "author_id")
             ,inverseJoinColumns = @JoinColumn(name = "book_id"))
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Book> writtenBooks = new HashSet<>();
 
     public Author(String firstName, String lastName, LocalDate birthDate) {
@@ -48,10 +50,10 @@ public class Author {
 
     public void addWrittenBook(Book book) {
         writtenBooks.add(book);
-       // book.getAuthors().add(this);
+        book.getAuthors().add(this);
     }
     public void removeWrittenBook(Book book) {
         writtenBooks.remove(book);
-      //  book.getAuthors().remove(this);
+        book.getAuthors().remove(this);
     }
 }
