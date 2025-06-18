@@ -34,7 +34,7 @@ public class Author {
     Keep in mind that since a many-to-many relationship doesn’t have an owner side in the database,
     we could configure the join table in the Course class and reference it from the Student class.
      */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER) // todo: try to figure out why I got lazy error
     @JoinTable( name = "authors_books"
             ,joinColumns = @JoinColumn(name = "author_id")
             ,inverseJoinColumns = @JoinColumn(name = "book_id"))

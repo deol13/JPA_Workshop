@@ -49,6 +49,11 @@ public class AppUser {
     // In this case it will create a foreign key linking AppUser with the primary key from Details.
     // "name" in @JoinColumn is the name of the foreign key column this annotation creates by connecting the two classes.
 
+    /*
+    ManyToOne/OneToMany - Many side is usually the owning side
+    OneToOne - Choose based on use case or data model
+    ManyToMany - Pick one side as owning, use mappedBy on the other
+     */
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details_id")
@@ -77,4 +82,6 @@ public class AppUser {
         boolean success = bookLoanList.remove(bookLoan);
         bookLoan.setBorrower(null);
     }
+
+    //todo: checkout Todo_API Todo and Attachment relationship and their methods
 }

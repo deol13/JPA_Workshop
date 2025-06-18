@@ -15,6 +15,7 @@ public interface AuthorRepository extends CrudRepository<Author, Long> {
     Set<Author> findByWrittenBooksId(int writtenBooksId);
     void deleteById(int id);
 
+    //Set<Author> findByFirstNameOrLastNameContaining(String firstName, String lastName);  // ??
     @Query("select a from Author a where a.firstName LIKE %:keyword% OR a.lastName LIKE %:keyword%")
     Set<Author> findByFirstNameOrLastNameContainingKeyword(String keyword);
 

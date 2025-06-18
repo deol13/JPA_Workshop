@@ -56,7 +56,7 @@ public class BookLoan {
         this.borrower = borrower;
     }
 
-
+    // todo: add @ToString then @ToString.Exclude above borrower. Also in @EqualsAndHashCode
     @Override
     public String toString() {
         if(borrower == null){
