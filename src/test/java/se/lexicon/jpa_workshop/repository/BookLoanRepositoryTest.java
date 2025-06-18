@@ -23,7 +23,7 @@ public class BookLoanRepositoryTest {
     @Test
     public void testFindByBorrowerId() {
         // given
-        AppUser borrower = new AppUser("John", "Doe", LocalDate.of(1990, 1, 1));
+        AppUser borrower = new AppUser("John", "Doe");
         appUserRepository.save(borrower);
         Book book = new Book("The Hobbit", 30);
         bookRepository.save(book);
@@ -44,7 +44,7 @@ public class BookLoanRepositoryTest {
     @Test
     public void testFindByBookId() {
         // given
-        AppUser borrower = new AppUser("John", "Doe", LocalDate.of(1990, 1, 1));
+        AppUser borrower = new AppUser("John", "Doe");
         appUserRepository.save(borrower);
         Book book = new Book("The Hobbit", 30);
         bookRepository.save(book);

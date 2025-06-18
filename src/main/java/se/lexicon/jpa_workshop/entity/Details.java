@@ -25,15 +25,16 @@ public class Details {
     // GenerationType is different ways to give this field a value, IDENTITY is auto increment
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private int id; // Follow naming conventions
 
     // @Setter is a Lombok annotation for auto generate a setter method.
     // We could put @Setter outside the class with all the others
     // but if we just want specific setters and getters to be made, we need to put it before those fields.
     // Here we don't want a setter for id.
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     @Setter private String name;
-    @Column(length = 50)
+    @Column(length = 50, unique = true, nullable = false)
     @Setter private String email;
     @Setter private LocalDate birthDate;
 

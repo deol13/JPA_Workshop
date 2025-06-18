@@ -20,6 +20,7 @@ import java.util.Set;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private int id;
     @Column(unique = true, nullable = false)
     @UuidGenerator

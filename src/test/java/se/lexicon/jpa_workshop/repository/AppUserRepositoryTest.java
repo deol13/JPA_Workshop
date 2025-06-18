@@ -27,7 +27,7 @@ public class AppUserRepositoryTest {
     @Test
     void whenSaveAppUser_thenCorrect() {
         // given
-        AppUser appUser = new AppUser("un","123456", LocalDate.now());
+        AppUser appUser = new AppUser("un","123456");
 
         // when
         AppUser createdUser = appUserRepository.save(appUser);
@@ -40,7 +40,7 @@ public class AppUserRepositoryTest {
     @Test
     void whenDeleteAppUser_thenCorrect() {
         // given
-        AppUser appUser = new AppUser("un","123456", LocalDate.now());
+        AppUser appUser = new AppUser("un","123456");
 
         // when
         appUserRepository.delete(appUser);
@@ -53,7 +53,7 @@ public class AppUserRepositoryTest {
     @Test
     void whenUpdateAppUser_thenCorrect() {
         // given
-        AppUser appUser = new AppUser("un","123456", LocalDate.now());
+        AppUser appUser = new AppUser("un","123456");
         AppUser createdUser = appUserRepository.save(appUser);
 
         // when
@@ -69,7 +69,7 @@ public class AppUserRepositoryTest {
     @Test
     void whenFindAppUsersById_thenCorrect() {
         //given
-        AppUser appUser = new AppUser("un","123456", LocalDate.now());
+        AppUser appUser = new AppUser("un","123456");
         AppUser createdUser = appUserRepository.save(appUser);
 
         // when
@@ -83,8 +83,8 @@ public class AppUserRepositoryTest {
     @Test
     void whenFindByUsername_match_thenCorrect() {
         // given
-        AppUser appUser = new AppUser("un","123456", LocalDate.now());
-        AppUser appUser2 = new AppUser("un2","1234567", LocalDate.now());
+        AppUser appUser = new AppUser("un","123456");
+        AppUser appUser2 = new AppUser("un2","1234567");
         AppUser createdUser = appUserRepository.save(appUser);
         appUserRepository.save(appUser2);
 
@@ -100,8 +100,8 @@ public class AppUserRepositoryTest {
     @Test
     void whenFindByUsername_noMatch_thenCorrect() {
         // given
-        AppUser appUser = new AppUser("un","123456", LocalDate.now());
-        AppUser appUser2 = new AppUser("un2","1234567", LocalDate.now());
+        AppUser appUser = new AppUser("un","123456");
+        AppUser appUser2 = new AppUser("un2","1234567");
         AppUser createdUser = appUserRepository.save(appUser);
         appUserRepository.save(appUser2);
 
@@ -115,9 +115,11 @@ public class AppUserRepositoryTest {
     @Test
     void whenFindByRegDateBetween_match_thenCorrect() {
         // given
-        AppUser appUser = new AppUser("un","123456", LocalDate.of(2020,1,1));
-        AppUser appUser2 = new AppUser("un2","1234567", LocalDate.now());
+        AppUser appUser = new AppUser("un","123456");
+        AppUser appUser2 = new AppUser("un2","1234567");
         AppUser createdUser = appUserRepository.save(appUser);
+        createdUser.setRegDate(LocalDate.of(2020,1,1));
+        createdUser = appUserRepository.save(createdUser);
         AppUser createdUser2 = appUserRepository.save(appUser2);
 
         // when
@@ -132,9 +134,11 @@ public class AppUserRepositoryTest {
     @Test
     void whenFindByRegDateBetween_noMatch_thenCorrect() {
         // given
-        AppUser appUser = new AppUser("un","123456", LocalDate.of(2020,1,1));
-        AppUser appUser2 = new AppUser("un2","1234567", LocalDate.now());
+        AppUser appUser = new AppUser("un","123456");
+        AppUser appUser2 = new AppUser("un2","1234567");
         AppUser createdUser = appUserRepository.save(appUser);
+        createdUser.setRegDate(LocalDate.of(2020,1,1));
+        createdUser = appUserRepository.save(createdUser);
         AppUser createdUser2 = appUserRepository.save(appUser2);
 
         // when
@@ -150,7 +154,7 @@ public class AppUserRepositoryTest {
         Details details = new Details("testName","testEmail", LocalDate.now());
         Details createdDetails = detailsRepository.save(details);
 
-        AppUser appUser = new AppUser("un","123456", LocalDate.now(), createdDetails);
+        AppUser appUser = new AppUser("un","123456", createdDetails);
         AppUser createdUser = appUserRepository.save(appUser);
 
         // when
@@ -167,7 +171,7 @@ public class AppUserRepositoryTest {
         Details details = new Details("testName","testEmail", LocalDate.now());
         Details createdDetails = detailsRepository.save(details);
 
-        AppUser appUser = new AppUser("un","123456", LocalDate.now(), createdDetails);
+        AppUser appUser = new AppUser("un","123456", createdDetails);
         AppUser createdUser = appUserRepository.save(appUser);
 
         // when

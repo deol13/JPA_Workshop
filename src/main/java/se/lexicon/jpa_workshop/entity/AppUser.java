@@ -25,16 +25,18 @@ public class AppUser {
     // GenerationType is different ways to give this field a value, IDENTITY is auto increment
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private int id; // Follow naming conventions
 
     // @Setter is a Lombok annotation for auto generate a setter method.
     // We could put @Setter outside the class with all the others
     // but if we just want specific setters and getters to be made, we need to put it before those fields.
     // Here we don't want a setter for id.
-    @Column(length = 50)
+    @Column(nullable = false, length = 50)
     @Setter private String username;
-    @Column(length = 50)
+    @Column(nullable = false, length = 50)
     @Setter private String password; // don't forgot to hash it
+    @Column(nullable = false, updatable = false)
     @Setter private LocalDate regDate;
 
     // @OneToOne annotation maps a relationship with the class of the object its above for the database.
@@ -52,15 +54,18 @@ public class AppUser {
     @JoinColumn(name = "details_id")
     @Setter private Details userDetails;
 
-    public AppUser(String username, String password, LocalDate regDate, Details userDetails) {
+    @PrePersist
+    protected void onCreate() {
+        regDate = LocalDate.now();
+    }
+
+    public AppUser(String username, String password, Details userDetails) {
         this.username = username;
         this.password = password;
-        this.regDate = regDate;
         this.userDetails = userDetails;
     }
-    public AppUser(String username, String password, LocalDate regDate ) {
+    public AppUser(String username, String password) {
         this.username = username;
         this.password = password;
-        this.regDate = regDate;
     }
 }
