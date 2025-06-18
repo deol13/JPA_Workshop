@@ -3,14 +3,8 @@ package se.lexicon.jpa_workshop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import se.lexicon.jpa_workshop.entity.AppUser;
-import se.lexicon.jpa_workshop.entity.Book;
-import se.lexicon.jpa_workshop.entity.BookLoan;
-import se.lexicon.jpa_workshop.entity.Details;
-import se.lexicon.jpa_workshop.repository.AppUserRepository;
-import se.lexicon.jpa_workshop.repository.BookLoanRepository;
-import se.lexicon.jpa_workshop.repository.BookRepository;
-import se.lexicon.jpa_workshop.repository.DetailsRepository;
+import se.lexicon.jpa_workshop.entity.*;
+import se.lexicon.jpa_workshop.repository.*;
 
 import java.time.LocalDate;
 
@@ -20,13 +14,17 @@ public class MyCommandLineRunner implements CommandLineRunner {
     private DetailsRepository detailsRepository;
     private BookRepository bookRepository;
     private BookLoanRepository bookLoanRepository;
+    private AuthorRepository authorRepository;
 
     @Autowired
-    public MyCommandLineRunner(AppUserRepository appUserRepository, DetailsRepository detailsRepository, BookRepository bookRepository, BookLoanRepository bookLoanRepository) {
+    public MyCommandLineRunner(AppUserRepository appUserRepository, DetailsRepository detailsRepository,
+                               BookRepository bookRepository, BookLoanRepository bookLoanRepository,
+                               AuthorRepository authorRepository) {
         this.appUserRepository = appUserRepository;
         this.detailsRepository = detailsRepository;
         this.bookRepository = bookRepository;
         this.bookLoanRepository = bookLoanRepository;
+        this.authorRepository = authorRepository;
     }
 
     @Override
@@ -45,13 +43,21 @@ public class MyCommandLineRunner implements CommandLineRunner {
         Book createdBook = bookRepository.save(book);
         System.out.printf("\nBook created: %s\n", createdBook);
 
-        BookLoan bookLoan = new BookLoan(LocalDate.of(2025, 7, 1), createdAppUser, createdBook);
-        BookLoan createdBookLoan = bookLoanRepository.save(bookLoan);
-        System.out.printf("\nBook loan created: %s\n", createdBookLoan);
+//        BookLoan bookLoan = new BookLoan(LocalDate.of(2025, 7, 1), createdAppUser, createdBook);
+//        BookLoan createdBookLoan = bookLoanRepository.save(bookLoan);
+//        System.out.printf("\nBook loan created: %s\n", createdBookLoan);
 
-        int id = bookLoanRepository.updateBookLoanReturnedTrueById(createdBookLoan.getId());
-        BookLoan updatedBookLoan = bookLoanRepository.findById((long) id).orElse(null);
-        System.out.printf("\nBook loan updated: %s\n", updatedBookLoan);
+//        int id = bookLoanRepository.updateBookLoanReturnedTrueById(createdBookLoan.getId());
+//        BookLoan updatedBookLoan = bookLoanRepository.findById((long) id).orElse(null);
+//        System.out.printf("\nBook loan updated: %s\n", updatedBookLoan);
 
+        Author author = new Author("John", "Doe", LocalDate.of(1995, 1, 1));
+        author.addWrittenBook(book);
+        Author createdAuthor = authorRepository.save(author);
+        System.out.printf("\nAuthor created: %s\n", createdAuthor);
+
+        int id2 = authorRepository.updateAuthorNameById("Dennis", "Olsen", createdAuthor.getId());
+        Author updatedAuthor = authorRepository.findById((long) id2).orElse(null);
+        System.out.printf("\nAuthor updated: %s\n", updatedAuthor);
     }
 }
