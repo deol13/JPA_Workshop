@@ -15,7 +15,7 @@ import java.util.List;
 // and we can easily create custom version of those or use @Query to make more complex methods directly in the interface.
 // We don't need to implement these methods in a class, Spring data JPA will do it all for us.
 // We just need to use this interface as an object.
-public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
+public interface AppUserRepository extends CrudRepository<AppUser, Long> {
     // By following Spring data JPA naming convention we can create custom version of CrudRepository's already existing methods.
     List<AppUser> findByUsername(String username);
     List<AppUser> findByRegDateBetween(LocalDate regDate, LocalDate regDate2);

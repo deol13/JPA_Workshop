@@ -18,7 +18,7 @@ import java.util.Set;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(length = 50)
     private String firstName;
     @Column(length = 50)
@@ -34,13 +34,13 @@ public class Author {
     Keep in mind that since a many-to-many relationship doesn’t have an owner side in the database,
     we could configure the join table in the Course class and reference it from the Student class.
      */
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    // todo: try to figure out why I got lazy error
+    @ManyToMany
     @JoinTable( name = "authors_books"
             ,joinColumns = @JoinColumn(name = "author_id")
             ,inverseJoinColumns = @JoinColumn(name = "book_id"))
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Setter(AccessLevel.NONE)
     private Set<Book> writtenBooks = new HashSet<>();
 
     public Author(String firstName, String lastName, LocalDate birthDate) {

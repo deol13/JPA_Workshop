@@ -20,7 +20,7 @@ import java.util.Set;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(unique = true, nullable = false)
     @UuidGenerator
     private String isbn;
@@ -28,9 +28,12 @@ public class Book {
     private String title;
     private int maxLoadDays;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "writtenBooks")
+    // In ManyToMany and ManyToOne / OneToMany, including the other table in ToString and Equal and HashCode
+    // can cause exceptions because it will loop when checking the other side and finding itself.
+    @ManyToMany(mappedBy = "writtenBooks")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Setter(AccessLevel.NONE)
     private Set<Author> authors = new HashSet<>();
 
     public Book(String title, int maxLoadDays) {

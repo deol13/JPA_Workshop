@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class BookLoan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(nullable = false)
     private LocalDate loanDate;
     @Column(nullable = false)
@@ -27,7 +27,9 @@ public class BookLoan {
 
     // Uni directional many-to-to relationship, the associated classes / tables have no information about it.
     // Many of this class / table can have a relationship with the same AppUser and Book.
-    @ManyToOne(cascade = CascadeType.ALL)
+    // BookLoan and AppUser are separate entities and not very connected so it doesn't make sense to connected them with Cascade.ALL,
+    // Using Cascade and not using Cascade affects code differently so be careful when you use Cascade.
+    @ManyToOne
     @JoinColumn(name = "borrower_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

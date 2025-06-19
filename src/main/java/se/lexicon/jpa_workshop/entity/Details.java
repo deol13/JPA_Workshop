@@ -26,7 +26,7 @@ public class Details {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private int id; // Follow naming conventions
+    private long id; // Follow naming conventions
 
     // @Setter is a Lombok annotation for auto generate a setter method.
     // We could put @Setter outside the class with all the others

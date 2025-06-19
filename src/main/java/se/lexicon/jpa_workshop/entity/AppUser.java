@@ -27,7 +27,7 @@ public class AppUser {
     // GenerationType is different ways to give this field a value, IDENTITY is auto increment
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; // Follow naming conventions
+    private long id; // Follow naming conventions
 
     // @Setter is a Lombok annotation for auto generate a setter method.
     // We could put @Setter outside the class with all the others
@@ -55,6 +55,7 @@ public class AppUser {
     ManyToMany - Pick one side as owning, use mappedBy on the other
      */
 
+    // Details is an integral part of AppUser and is not used on its own, so using CascadeType.ALL to handle it from AppUser make sense
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details_id")
     @Setter private Details userDetails;
