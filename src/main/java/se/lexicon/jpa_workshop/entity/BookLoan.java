@@ -25,6 +25,13 @@ public class BookLoan {
     @Column(nullable = false)
     private boolean returned;
 
+    /*
+    @OneToOne = FetchType.EAGER
+    @OneToMany = FetchType.LAZY
+    @ManyToOne =  FetchType.EAGER
+    @ManyToMany = FetchType.LAZY
+     */
+
     // Uni directional many-to-to relationship, the associated classes / tables have no information about it.
     // Many of this class / table can have a relationship with the same AppUser and Book.
     // BookLoan and AppUser are separate entities and not very connected so it doesn't make sense to connected them with Cascade.ALL,

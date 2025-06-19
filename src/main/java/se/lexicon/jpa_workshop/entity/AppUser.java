@@ -85,7 +85,7 @@ public class AppUser {
         bookLoan.setBorrower(this);
     }
     public void removeBookLoan(BookLoan bookLoan) {
-        boolean success = bookLoanList.remove(bookLoan);
+        bookLoanList.remove(bookLoan);
         bookLoan.setBorrower(null);
     }
 
