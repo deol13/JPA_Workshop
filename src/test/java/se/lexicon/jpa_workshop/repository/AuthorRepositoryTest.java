@@ -55,7 +55,7 @@ public class AuthorRepositoryTest {
         Author savedAuthor = authorRepo.save(author);
 
         // when
-        Set<Author> foundAuthor = authorRepo.findByWrittenBooksId(savedBook.getId());
+        Set<Author> foundAuthor = authorRepo.findByWrittenBooksId((int) savedBook.getId());
 
         // then
         Assertions.assertEquals(1, foundAuthor.size());
@@ -100,10 +100,10 @@ public class AuthorRepositoryTest {
         String expectedLastName = "Olsen";
 
         // when
-        int id = authorRepo.updateAuthorNameById(expectedFirstName, expectedLastName, savedAuthor.getId());
+        authorRepo.updateAuthorNameById(expectedFirstName, expectedLastName, savedAuthor.getId());
 
         // then
-        Author updatedAuthor = authorRepo.findById((long) id).orElse(null);
+        Author updatedAuthor = authorRepo.findById(savedAuthor.getId()).get();
         Assertions.assertNotNull(updatedAuthor);
         Assertions.assertEquals(expectedFirstName, updatedAuthor.getFirstName());
         Assertions.assertEquals(expectedLastName, updatedAuthor.getLastName());

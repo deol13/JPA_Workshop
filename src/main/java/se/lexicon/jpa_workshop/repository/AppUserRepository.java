@@ -21,7 +21,7 @@ public interface AppUserRepository extends CrudRepository<AppUser, Long> {
     List<AppUser> findByRegDateBetween(LocalDate regDate, LocalDate regDate2);
     // Or we can create our own queries if the existing methods are not enough.
     @Query("SELECT user FROM AppUser user WHERE user.userDetails.id = :id")
-    AppUser findByDetailsId(@Param("id") int id);
+    AppUser findByDetailsId(@Param("id") long id);
 
 
     // spring data jpa generates all basic CRUD operations for the Student entity

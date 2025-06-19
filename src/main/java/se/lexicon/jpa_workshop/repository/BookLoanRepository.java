@@ -15,8 +15,8 @@ import java.util.List;
 
 @Repository
 public interface BookLoanRepository extends CrudRepository<BookLoan, Long> {
-    List<BookLoan> findByBorrowerId(int id);
-    List<BookLoan> findByBookId(int id);
+    List<BookLoan> findByBorrowerId(long id);
+    List<BookLoan> findByBookId(long id);
     List<BookLoan> findAllByReturnedFalse();
     List<BookLoan> findAllByDueDateBeforeAndReturnedFalse(LocalDate dueDate);
     List<BookLoan> findAllByLoanDateBetween(LocalDate startDate, LocalDate endDate);
@@ -27,5 +27,5 @@ public interface BookLoanRepository extends CrudRepository<BookLoan, Long> {
     @Modifying(clearAutomatically = true) // EntityManager doesn't flush change automatically by default. You won't get the updated data otherwise.
     @Transactional // needed for updates to work, most likely to ensure if associations exists, this update will not work if associated changed doesn't work.
     @Query("update BookLoan b set b.returned = true where b.id = :id")
-    int updateBookLoanReturnedTrueById(@Param("id") int id);
+    int updateBookLoanReturnedTrueById(@Param("id") long id);
 }

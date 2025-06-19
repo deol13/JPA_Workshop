@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.jpa_workshop.entity.AppUser;
 import se.lexicon.jpa_workshop.entity.Book;
 import se.lexicon.jpa_workshop.entity.BookLoan;
@@ -11,6 +12,7 @@ import se.lexicon.jpa_workshop.entity.BookLoan;
 import java.time.LocalDate;
 import java.util.List;
 
+@Transactional
 @DataJpaTest
 public class BookLoanRepositoryTest {
     @Autowired
@@ -53,7 +55,7 @@ public class BookLoanRepositoryTest {
         bookLoanRepository.save(bookLoan);
 
         // when
-        List<BookLoan> bookLoans = bookLoanRepository.findByBookId(book.getId());
+        List<BookLoan> bookLoans = bookLoanRepository.findByBookId((int) book.getId());
 
         // then
         Assertions.assertEquals(1, bookLoans.size());
@@ -141,10 +143,10 @@ public class BookLoanRepositoryTest {
         BookLoan savedBookLoan = bookLoanRepository.save(bookLoan);
 
         // when
-        int id = bookLoanRepository.updateBookLoanReturnedTrueById(savedBookLoan.getId());
+        bookLoanRepository.updateBookLoanReturnedTrueById(savedBookLoan.getId());
 
         // when
-        BookLoan updatedBookLoan = bookLoanRepository.findById((long) id).orElse(null);
+        BookLoan updatedBookLoan = bookLoanRepository.findById(savedBookLoan.getId()).get();
         Assertions.assertNotNull(updatedBookLoan);
         Assertions.assertTrue(updatedBookLoan.isReturned());
     }
