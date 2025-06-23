@@ -8,6 +8,7 @@ import se.lexicon.jpa_workshop.entity.*;
 import se.lexicon.jpa_workshop.repository.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -36,26 +37,39 @@ public class MyCommandLineRunner implements CommandLineRunner {
     // If you use tables with associated with other tables, use @Transactional to make sure if one part goes wrong, the rest doesn't affect the database.
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         System.out.println("###### Application started successfully ######");
-        AppUser appUser = createAppUser("Admin", "123", "John Doe", "JohnDoe@Email.com");
-        Book book = createBook();
+//        AppUser appUser = createAppUser("Admin", "123", "John Doe", "JohnDoe@Email.com");
+        Book book = createBook("Lord of the Ring", 35);
         Author author = createAuthor(book);
-        BookLoan bookLoan = createBookLoan(appUser, book);
+//        BookLoan bookLoan = createBookLoan(appUser, book);
 
-        BookLoan updatedBookLoan = updateBookLoanReturned(book, bookLoan);
+//        BookLoan updatedBookLoan = updateBookLoanReturned(book, bookLoan);
+//
+//        Author updatedAuthor = updateAuthorName(author, "J.R.R", "Tolkien");
+//
+//        Author updatedAuthor2 = removeBookFromAuthor(book, updatedAuthor);
 
-        Author updatedAuthor = updateAuthorName(author, "J.R.R", "Tolkien");
+//        AppUser appUser2 = createAppUser("Admin2", "1233", "Johnny Doe", "JohnnyDoe@Email.com");
+//        BookLoan bookLoan2 = createBookLoanWithoutAppUser(book);
+//        AppUser updatedAppUser = addBookLoanToAppUser(bookLoan2, appUser2);
+//        AppUser updatedAppUser2 = removeBookLoanFromAppUser(bookLoan2, updatedAppUser);
 
-        //Doesn't work because updatedAuthor is lazy loaded and doesn't contain books.
-       // Author updatedAuthor2 = removeBookFromAuthor(book, updatedAuthor);
-        Author updatedAuthor2 = removeBookFromAuthor(book, author);
+//        Author author = authorRepository.findById(1L).get();
+//        author.removeWrittenBook(bookRepository.findById(1L).get());
+//        authorRepository.save(author);
 
-        // Work because appUser2 got a list of book loans
-        AppUser appUser2 = createAppUser("Admin2", "1233", "Johnny Doe", "JohnnyDoe@Email.com");
-        BookLoan bookLoan2 = createBookLoanWithoutAppUser(book);
-        AppUser updatedAppUser = addBookLoanToAppUser(bookLoan2, appUser2);
-        AppUser updatedAppUser2 = removeBookLoanFromAppUser(bookLoan2, updatedAppUser);
+
+
+        Book book2 = bookRepository.findById(1L).get();
+        Author author2 = authorRepository.findById(1L).get();
+
+//        author.addWrittenBook(book);
+        book.removeAuthor(author);
+
+
+
     }
     @Transactional
     public AppUser createAppUser(String userName, String password, String detailName, String detailEmail) {
@@ -67,8 +81,8 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
     }
     @Transactional
-    public Book createBook() {
-        Book book = new Book("Lord of the Ring", 35);
+    public Book createBook(String title, int maxLoadDays) {
+        Book book = new Book(title, maxLoadDays);
         Book createdBook = bookRepository.save(book);
         System.out.printf("\nBook created: %s\n", createdBook);
         return createdBook;
